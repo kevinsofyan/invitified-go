@@ -20,7 +20,7 @@ import (
 // @contact.email kevinsofyan.13@gmail.com
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-// @host localhost:8080
+// @host invitified-go-f4c66a92ca5a.herokuapp.com
 // @BasePath /
 
 func main() {
