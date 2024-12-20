@@ -1133,7 +1133,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:8080",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "University GC API",
+	Title:            "Mini Project Invitified",
 	Description:      "This is a sample server for a university API.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

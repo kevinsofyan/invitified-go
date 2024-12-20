@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a sample server for a university API.",
-        "title": "University GC API",
+        "title": "Mini Project Invitified",
         "contact": {
             "name": "kevinsofyan",
             "email": "kevinsofyan.13@gmail.com"

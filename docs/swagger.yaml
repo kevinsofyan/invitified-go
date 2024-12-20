@@ -124,7 +124,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: University GC API
+  title: Mini Project Invitified
   version: "1.0"
 paths:
   /categories:

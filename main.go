@@ -2,6 +2,7 @@ package main
 
 import (
 	"invitified-go/config"
+	_ "invitified-go/docs"
 	"invitified-go/routes"
 	"log"
 	"os"
@@ -12,9 +13,9 @@ import (
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
-// @title University GC API
+// @title Mini Project Invitified
 // @version 1.0
-// @description This is a sample server for a university API.
+// @description This is a sample server for a Mini Project Invitified.
 // @contact.name kevinsofyan
 // @contact.email kevinsofyan.13@gmail.com
 // @license.name Apache 2.0
