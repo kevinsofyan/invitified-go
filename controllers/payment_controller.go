@@ -16,22 +16,40 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// PaymentController handles payment-related requests
 type PaymentController struct {
 	paymentRepo repositories.PaymentRepository
 	rentalRepo  repositories.RentalRepository
 	userRepo    repositories.UserRepository
 }
 
+// PaymentRequest represents a request to create a payment
 type PaymentRequest struct {
 	RentalID      string `json:"rental_id" validate:"required"`
 	PaymentMethod string `json:"payment_method" validate:"required,oneof=QR_CODE VIRTUAL_ACCOUNT EWALLET"`
 	ChannelCode   string `json:"channel_code" validate:"required"`
 }
 
+// NewPaymentController creates a new PaymentController
 func NewPaymentController(pr repositories.PaymentRepository, rr repositories.RentalRepository, ur repositories.UserRepository) *PaymentController {
 	return &PaymentController{pr, rr, ur}
 }
 
+// CreatePayment godoc
+// @Summary Create a new payment
+// @Description Create a new payment for a rental
+// @Tags payments
+// @Accept json
+// @Produce json
+// @Param payment body PaymentRequest true "Payment Request"
+// @Success 201 {object} map[string]interface{}
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 401 {object} models.ErrorResponse
+// @Failure 403 {object} models.ErrorResponse
+// @Failure 404 {object} models.ErrorResponse
+// @Failure 500 {object} models.ErrorResponse
+// @Security ApiKeyAuth
+// @Router /payments [post]
 func (ctrl *PaymentController) CreatePayment(c echo.Context) error {
 	var req PaymentRequest
 	if err := c.Bind(&req); err != nil {

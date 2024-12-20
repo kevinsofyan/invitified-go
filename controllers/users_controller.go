@@ -12,15 +12,18 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// UserController handles user-related requests
 type UserController struct {
 	repo      repositories.UserRepository
 	tokenRepo repositories.TokenRepository
 }
 
+// NewUserController creates a new UserController
 func NewUserController(repo repositories.UserRepository, tokenRepo repositories.TokenRepository) *UserController {
 	return &UserController{repo, tokenRepo}
 }
 
+// LoginRequest represents a login request
 type LoginRequest struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
@@ -31,18 +34,19 @@ type ErrorResponse struct {
 	Message string `json:"message"`
 }
 
-// RegisterUser registers a new user
+// RegisterUser godoc
+// @Summary Register a new user
+// @Description Register a new user
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body models.UserRequest true "User Request"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /users/register [post]
 func (ctrl *UserController) RegisterUser(c echo.Context) error {
-	type UserRequest struct {
-		Username      string `json:"username"`
-		Email         string `json:"email"`
-		Password      string `json:"password"`
-		FullName      string `json:"full_name"`
-		ContactNumber string `json:"contact_number"`
-		RoleName      string `json:"role_name"`
-	}
-
-	var req UserRequest
+	var req models.UserRequest
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, ErrorResponse{Message: "Invalid input"})
 	}
@@ -84,6 +88,18 @@ func (ctrl *UserController) RegisterUser(c echo.Context) error {
 	})
 }
 
+// LoginUser godoc
+// @Summary Login a user
+// @Description Login a user
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param login body LoginRequest true "Login Request"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} ErrorResponse
+// @Failure 401 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /users/login [post]
 func (ctrl *UserController) LoginUser(c echo.Context) error {
 	loginRequest := new(LoginRequest)
 	if err := c.Bind(loginRequest); err != nil {
@@ -134,7 +150,15 @@ func (ctrl *UserController) LoginUser(c echo.Context) error {
 	})
 }
 
-// GetUserProfile gets the profile of the logged-in user
+// GetUserProfile godoc
+// @Summary Get user profile
+// @Description Get the profile of the logged-in user
+// @Tags users
+// @Produce json
+// @Success 200 {object} map[string]interface{}
+// @Failure 401 {object} ErrorResponse
+// @Security ApiKeyAuth
+// @Router /users/profile [get]
 func (ctrl *UserController) GetUserProfile(c echo.Context) error {
 	userID, ok := c.Get("userID").(uuid.UUID)
 	if !ok {
@@ -151,6 +175,19 @@ func (ctrl *UserController) GetUserProfile(c echo.Context) error {
 	})
 }
 
+// DeleteUser godoc
+// @Summary Delete a user
+// @Description Delete a user
+// @Tags users
+// @Produce json
+// @Param id path string true "User ID"
+// @Success 204
+// @Failure 400 {object} ErrorResponse
+// @Failure 401 {object} ErrorResponse
+// @Failure 403 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Security ApiKeyAuth
+// @Router /users/{id} [delete]
 func (ctrl *UserController) DeleteUser(c echo.Context) error {
 	loggedInUserID, ok := c.Get("userID").(uuid.UUID)
 	if !ok {

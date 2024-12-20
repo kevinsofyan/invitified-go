@@ -9,15 +9,31 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// RentalController handles rental-related requests
 type RentalController struct {
 	repo          repositories.RentalRepository
 	equipmentRepo repositories.EquipmentRepository
 }
 
+// NewRentalController creates a new RentalController
 func NewRentalController(repo repositories.RentalRepository, equipmentRepo repositories.EquipmentRepository) *RentalController {
 	return &RentalController{repo, equipmentRepo}
 }
 
+// CreateRental godoc
+// @Summary Create a new rental
+// @Description Create a new rental
+// @Tags rentals
+// @Accept json
+// @Produce json
+// @Param rental body models.Rental true "Rental"
+// @Success 201 {object} models.Rental
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 401 {object} models.ErrorResponse
+// @Failure 404 {object} models.ErrorResponse
+// @Failure 500 {object} models.ErrorResponse
+// @Security ApiKeyAuth
+// @Router /rentals [post]
 func (ctrl *RentalController) CreateRental(c echo.Context) error {
 	rental := new(models.Rental)
 	if err := c.Bind(rental); err != nil {
@@ -63,6 +79,17 @@ func (ctrl *RentalController) CreateRental(c echo.Context) error {
 	return c.JSON(http.StatusCreated, rental)
 }
 
+// GetRentalByID godoc
+// @Summary Get a rental by ID
+// @Description Get a rental by ID
+// @Tags rentals
+// @Produce json
+// @Param id path string true "Rental ID"
+// @Success 200 {object} models.Rental
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 404 {object} models.ErrorResponse
+// @Security ApiKeyAuth
+// @Router /rentals/{id} [get]
 func (ctrl *RentalController) GetRentalByID(c echo.Context) error {
 	id := c.Param("id")
 	rentalID, err := uuid.Parse(id)
@@ -85,6 +112,15 @@ func (ctrl *RentalController) GetRentalByID(c echo.Context) error {
 	return c.JSON(http.StatusOK, rental)
 }
 
+// GetAllRentals godoc
+// @Summary Get all rentals
+// @Description Get all rentals
+// @Tags rentals
+// @Produce json
+// @Success 200 {array} models.Rental
+// @Failure 500 {object} models.ErrorResponse
+// @Security ApiKeyAuth
+// @Router /rentals [get]
 func (ctrl *RentalController) GetAllRentals(c echo.Context) error {
 	rentals, err := ctrl.repo.FindAll()
 	if err != nil {
@@ -105,6 +141,20 @@ func (ctrl *RentalController) GetAllRentals(c echo.Context) error {
 	return c.JSON(http.StatusOK, rentals)
 }
 
+// UpdateRental godoc
+// @Summary Update a rental
+// @Description Update a rental
+// @Tags rentals
+// @Accept json
+// @Produce json
+// @Param id path string true "Rental ID"
+// @Param rental body models.Rental true "Rental"
+// @Success 200 {object} models.Rental
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 404 {object} models.ErrorResponse
+// @Failure 500 {object} models.ErrorResponse
+// @Security ApiKeyAuth
+// @Router /rentals/{id} [put]
 func (ctrl *RentalController) UpdateRental(c echo.Context) error {
 	id := c.Param("id")
 	rentalID, err := uuid.Parse(id)
@@ -124,6 +174,17 @@ func (ctrl *RentalController) UpdateRental(c echo.Context) error {
 	return c.JSON(http.StatusOK, rental)
 }
 
+// DeleteRental godoc
+// @Summary Delete a rental
+// @Description Delete a rental
+// @Tags rentals
+// @Produce json
+// @Param id path string true "Rental ID"
+// @Success 204
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 500 {object} models.ErrorResponse
+// @Security ApiKeyAuth
+// @Router /rentals/{id} [delete]
 func (ctrl *RentalController) DeleteRental(c echo.Context) error {
 	id := c.Param("id")
 	rentalID, err := uuid.Parse(id)

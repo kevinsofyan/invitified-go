@@ -24,3 +24,15 @@ type User struct {
 	RoleName      string    `json:"role_name" gorm:"-"`
 	CreatedAt     time.Time `json:"created_at" gorm:"default:CURRENT_TIMESTAMP"`
 }
+type ErrorResponse struct {
+	Message string `json:"message"`
+}
+
+type UserRequest struct {
+	Username      string `json:"username"`
+	Email         string `json:"email"`
+	Password      string `json:"password"`
+	FullName      string `json:"full_name"`
+	ContactNumber string `json:"contact_number"`
+	RoleName      string `json:"role_name"`
+}
