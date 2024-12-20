@@ -163,6 +163,14 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/models.EquipmentCategory"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -201,6 +209,14 @@ const docTemplate = `{
                         "description": "Category ID",
                         "name": "id",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -251,6 +267,14 @@ const docTemplate = `{
                         "description": "Offset",
                         "name": "offset",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -290,6 +314,14 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/models.Equipment"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -330,6 +362,14 @@ const docTemplate = `{
                         "description": "Equipment Slug",
                         "name": "slug",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -376,6 +416,14 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/models.Equipment"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -421,6 +469,14 @@ const docTemplate = `{
                         "name": "slug",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -448,11 +504,6 @@ const docTemplate = `{
         },
         "/payments": {
             "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Create a new payment for a rental",
                 "consumes": [
                     "application/json"
@@ -473,6 +524,14 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/controllers.PaymentRequest"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -518,11 +577,6 @@ const docTemplate = `{
         },
         "/rentals": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Get all rentals",
                 "produces": [
                     "application/json"
@@ -531,6 +585,16 @@ const docTemplate = `{
                     "rentals"
                 ],
                 "summary": "Get all rentals",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -550,11 +614,6 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Create a new rental",
                 "consumes": [
                     "application/json"
@@ -575,6 +634,14 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/models.Rental"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -613,11 +680,6 @@ const docTemplate = `{
         },
         "/rentals/{id}": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Get a rental by ID",
                 "produces": [
                     "application/json"
@@ -632,6 +694,14 @@ const docTemplate = `{
                         "description": "Rental ID",
                         "name": "id",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -657,11 +727,6 @@ const docTemplate = `{
                 }
             },
             "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Update a rental",
                 "consumes": [
                     "application/json"
@@ -689,6 +754,14 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/models.Rental"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -719,11 +792,6 @@ const docTemplate = `{
                 }
             },
             "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Delete a rental",
                 "produces": [
                     "application/json"
@@ -738,6 +806,14 @@ const docTemplate = `{
                         "description": "Rental ID",
                         "name": "id",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -1134,7 +1210,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "Mini Project Invitified",
-	Description:      "This is a sample server for a university API.",
+	Description:      "This is a sample server for a Mini Project Invitified.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

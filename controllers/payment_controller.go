@@ -48,7 +48,7 @@ func NewPaymentController(pr repositories.PaymentRepository, rr repositories.Ren
 // @Failure 403 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
-// @Security ApiKeyAuth
+// @Param Authorization header string true "token" default(<token>)
 // @Router /payments [post]
 func (ctrl *PaymentController) CreatePayment(c echo.Context) error {
 	var req PaymentRequest

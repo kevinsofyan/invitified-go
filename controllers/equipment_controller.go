@@ -93,6 +93,7 @@ func (ctrl *EquipmentController) GetAllCategories(c echo.Context) error {
 // @Success 200 {object} models.EquipmentCategory
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
+// @Param Authorization header string true "token" default(<token>)
 // @Router /categories/{id} [put]
 func (ctrl *EquipmentController) UpdateCategory(c echo.Context) error {
 	id := c.Param("id")
@@ -121,6 +122,7 @@ func (ctrl *EquipmentController) UpdateCategory(c echo.Context) error {
 // @Success 204
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
+// @Param Authorization header string true "token" default(<token>)
 // @Router /categories/{id} [delete]
 func (ctrl *EquipmentController) DeleteCategory(c echo.Context) error {
 	id := c.Param("id")
@@ -144,6 +146,7 @@ func (ctrl *EquipmentController) DeleteCategory(c echo.Context) error {
 // @Success 201 {object} models.Equipment
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
+// @Param Authorization header string true "token" default(<token>)
 // @Router /equipment [post]
 func (ctrl *EquipmentController) CreateEquipment(c echo.Context) error {
 	equipment := new(models.Equipment)
@@ -178,6 +181,7 @@ func (ctrl *EquipmentController) CreateEquipment(c echo.Context) error {
 // @Param slug path string true "Equipment Slug"
 // @Success 200 {object} models.Equipment
 // @Failure 404 {object} models.ErrorResponse
+// @Param Authorization header string true "token" default(<token>)
 // @Router /equipment/{slug} [get]
 func (ctrl *EquipmentController) GetEquipmentBySlug(c echo.Context) error {
 	slug := c.Param("slug")
@@ -198,6 +202,7 @@ func (ctrl *EquipmentController) GetEquipmentBySlug(c echo.Context) error {
 // @Param offset query int false "Offset"
 // @Success 200 {object} map[string]interface{}
 // @Failure 500 {object} models.ErrorResponse
+// @Param Authorization header string true "token" default(<token>)
 // @Router /equipment [get]
 func (ctrl *EquipmentController) GetAllEquipment(c echo.Context) error {
 	categoryID := c.QueryParam("category_id")
@@ -235,6 +240,7 @@ func (ctrl *EquipmentController) GetAllEquipment(c echo.Context) error {
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
+// @Param Authorization header string true "token" default(<token>)
 // @Router /equipment/{slug} [put]
 func (ctrl *EquipmentController) UpdateEquipment(c echo.Context) error {
 	slug := c.Param("slug")
@@ -261,6 +267,7 @@ func (ctrl *EquipmentController) UpdateEquipment(c echo.Context) error {
 // @Success 200 {object} map[string]interface{}
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
+// @Param Authorization header string true "token" default(<token>)
 // @Router /equipment/{slug} [delete]
 func (ctrl *EquipmentController) DeleteEquipment(c echo.Context) error {
 	slug := c.Param("slug")

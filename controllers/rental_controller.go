@@ -32,7 +32,7 @@ func NewRentalController(repo repositories.RentalRepository, equipmentRepo repos
 // @Failure 401 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
-// @Security ApiKeyAuth
+// @Param Authorization header string true "token" default(<token>)
 // @Router /rentals [post]
 func (ctrl *RentalController) CreateRental(c echo.Context) error {
 	rental := new(models.Rental)
@@ -88,7 +88,7 @@ func (ctrl *RentalController) CreateRental(c echo.Context) error {
 // @Success 200 {object} models.Rental
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
-// @Security ApiKeyAuth
+// @Param Authorization header string true "token" default(<token>)
 // @Router /rentals/{id} [get]
 func (ctrl *RentalController) GetRentalByID(c echo.Context) error {
 	id := c.Param("id")
@@ -119,7 +119,7 @@ func (ctrl *RentalController) GetRentalByID(c echo.Context) error {
 // @Produce json
 // @Success 200 {array} models.Rental
 // @Failure 500 {object} models.ErrorResponse
-// @Security ApiKeyAuth
+// @Param Authorization header string true "token" default(<token>)
 // @Router /rentals [get]
 func (ctrl *RentalController) GetAllRentals(c echo.Context) error {
 	rentals, err := ctrl.repo.FindAll()
@@ -153,7 +153,7 @@ func (ctrl *RentalController) GetAllRentals(c echo.Context) error {
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 404 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
-// @Security ApiKeyAuth
+// @Param Authorization header string true "token" default(<token>)
 // @Router /rentals/{id} [put]
 func (ctrl *RentalController) UpdateRental(c echo.Context) error {
 	id := c.Param("id")
@@ -183,7 +183,7 @@ func (ctrl *RentalController) UpdateRental(c echo.Context) error {
 // @Success 204
 // @Failure 400 {object} models.ErrorResponse
 // @Failure 500 {object} models.ErrorResponse
-// @Security ApiKeyAuth
+// @Param Authorization header string true "token" default(<token>)
 // @Router /rentals/{id} [delete]
 func (ctrl *RentalController) DeleteRental(c echo.Context) error {
 	id := c.Param("id")

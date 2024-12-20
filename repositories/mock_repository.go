@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"invitified-go/models"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/mock"
@@ -179,6 +180,23 @@ func (m *MockEquipmentRepository) DeleteEquipment(id uuid.UUID) error {
 	args := m.Called(id)
 	return args.Error(0)
 }
+func (m *MockEquipmentRepository) FindAllEquipment() ([]models.Equipment, error) {
+	args := m.Called()
+	return args.Get(0).([]models.Equipment), args.Error(1)
+}
+
+func (m *MockEquipmentRepository) FindEquipmentByCategoryID(categoryID uuid.UUID) ([]models.Equipment, error) {
+	args := m.Called(categoryID)
+	return args.Get(0).([]models.Equipment), args.Error(1)
+}
+
+func (m *MockEquipmentRepository) FindUserByID(id uuid.UUID) (*models.User, error) {
+	args := m.Called(id)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).(*models.User), args.Error(1)
+}
 
 // Mock Rental Repository
 type MockRentalRepository struct {
@@ -201,6 +219,11 @@ func (m *MockRentalRepository) FindByID(id uuid.UUID) (*models.Rental, error) {
 func (m *MockRentalRepository) FindAll() ([]models.Rental, error) {
 	args := m.Called()
 	return args.Get(0).([]models.Rental), args.Error(1)
+}
+
+func (m *MockRentalRepository) CheckOverlap(equipmentID uuid.UUID, startDate, endDate time.Time) (bool, error) {
+	args := m.Called(equipmentID, startDate, endDate)
+	return args.Get(0).(bool), args.Error(1)
 }
 
 func (m *MockRentalRepository) Update(rental *models.Rental) error {
@@ -247,4 +270,11 @@ func (m *MockPaymentRepository) FindByRentalID(rentalID uuid.UUID) (*models.Paym
 func (m *MockPaymentRepository) Update(payment *models.Payment) error {
 	args := m.Called(payment)
 	return args.Error(0)
+}
+func (m *MockPaymentRepository) FindByExternalID(externalID string) (*models.Payment, error) {
+	args := m.Called(externalID)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+	return args.Get(0).(*models.Payment), args.Error(1)
 }

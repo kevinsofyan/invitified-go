@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample server for a university API.",
+        "description": "This is a sample server for a Mini Project Invitified.",
         "title": "Mini Project Invitified",
         "contact": {
             "name": "kevinsofyan",
@@ -157,6 +157,14 @@
                         "schema": {
                             "$ref": "#/definitions/models.EquipmentCategory"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -195,6 +203,14 @@
                         "description": "Category ID",
                         "name": "id",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -245,6 +261,14 @@
                         "description": "Offset",
                         "name": "offset",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -284,6 +308,14 @@
                         "schema": {
                             "$ref": "#/definitions/models.Equipment"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -324,6 +356,14 @@
                         "description": "Equipment Slug",
                         "name": "slug",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -370,6 +410,14 @@
                         "schema": {
                             "$ref": "#/definitions/models.Equipment"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -415,6 +463,14 @@
                         "name": "slug",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -442,11 +498,6 @@
         },
         "/payments": {
             "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Create a new payment for a rental",
                 "consumes": [
                     "application/json"
@@ -467,6 +518,14 @@
                         "schema": {
                             "$ref": "#/definitions/controllers.PaymentRequest"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -512,11 +571,6 @@
         },
         "/rentals": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Get all rentals",
                 "produces": [
                     "application/json"
@@ -525,6 +579,16 @@
                     "rentals"
                 ],
                 "summary": "Get all rentals",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -544,11 +608,6 @@
                 }
             },
             "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Create a new rental",
                 "consumes": [
                     "application/json"
@@ -569,6 +628,14 @@
                         "schema": {
                             "$ref": "#/definitions/models.Rental"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -607,11 +674,6 @@
         },
         "/rentals/{id}": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Get a rental by ID",
                 "produces": [
                     "application/json"
@@ -626,6 +688,14 @@
                         "description": "Rental ID",
                         "name": "id",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -651,11 +721,6 @@
                 }
             },
             "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Update a rental",
                 "consumes": [
                     "application/json"
@@ -683,6 +748,14 @@
                         "schema": {
                             "$ref": "#/definitions/models.Rental"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -713,11 +786,6 @@
                 }
             },
             "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Delete a rental",
                 "produces": [
                     "application/json"
@@ -732,6 +800,14 @@
                         "description": "Rental ID",
                         "name": "id",
                         "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "\u003ctoken\u003e",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
                         "required": true
                     }
                 ],

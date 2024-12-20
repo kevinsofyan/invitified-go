@@ -120,7 +120,7 @@ info:
   contact:
     email: kevinsofyan.13@gmail.com
     name: kevinsofyan
-  description: This is a sample server for a university API.
+  description: This is a sample server for a Mini Project Invitified.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -184,6 +184,12 @@ paths:
         name: id
         required: true
         type: string
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -242,6 +248,12 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.EquipmentCategory'
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -276,6 +288,12 @@ paths:
         in: query
         name: offset
         type: integer
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -302,6 +320,12 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.Equipment'
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -329,6 +353,12 @@ paths:
         name: slug
         required: true
         type: string
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -354,6 +384,12 @@ paths:
       - description: Equipment Slug
         in: path
         name: slug
+        required: true
+        type: string
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
         required: true
         type: string
       produces:
@@ -386,6 +422,12 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.Equipment'
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -420,6 +462,12 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/controllers.PaymentRequest'
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -448,14 +496,19 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
       summary: Create a new payment
       tags:
       - payments
   /rentals:
     get:
       description: Get all rentals
+      parameters:
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -469,8 +522,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
       summary: Get all rentals
       tags:
       - rentals
@@ -485,6 +536,12 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.Rental'
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -508,8 +565,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
       summary: Create a new rental
       tags:
       - rentals
@@ -520,6 +575,12 @@ paths:
       - description: Rental ID
         in: path
         name: id
+        required: true
+        type: string
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
         required: true
         type: string
       produces:
@@ -535,8 +596,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
       summary: Delete a rental
       tags:
       - rentals
@@ -546,6 +605,12 @@ paths:
       - description: Rental ID
         in: path
         name: id
+        required: true
+        type: string
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
         required: true
         type: string
       produces:
@@ -563,8 +628,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/models.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
       summary: Get a rental by ID
       tags:
       - rentals
@@ -584,6 +647,12 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/models.Rental'
+      - default: <token>
+        description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -603,8 +672,6 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/models.ErrorResponse'
-      security:
-      - ApiKeyAuth: []
       summary: Update a rental
       tags:
       - rentals
