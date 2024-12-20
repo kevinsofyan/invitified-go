@@ -23,3 +23,9 @@ type RentalItem struct {
 	Quantity      int       `json:"quantity" gorm:"not null"`
 	EquipmentName string    `json:"equipment_name" gorm:"-"`
 }
+
+const (
+	RentalStatusPending  = "PENDING"
+	RentalStatusPaid     = "PAID"
+	RentalStatusComplete = "COMPLETED"
+)

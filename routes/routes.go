@@ -15,11 +15,13 @@ func InitRoutes(e *echo.Echo) {
 	tokenRepo := repositories.NewTokenRepository(config.DB)
 	equipmentRepo := repositories.NewEquipmentRepository(config.DB)
 	rentalRepo := repositories.NewRentalRepository(config.DB)
+	paymentRepo := repositories.NewPaymentRepository(config.DB)
 
 	// Initialize controllers
 	userController := controllers.NewUserController(userRepo, tokenRepo)
 	equipmentController := controllers.NewEquipmentController(equipmentRepo)
 	rentalController := controllers.NewRentalController(rentalRepo, equipmentRepo)
+	paymentController := controllers.NewPaymentController(paymentRepo, rentalRepo, userRepo)
 
 	// User routes
 	userGroup := e.Group("/users")
@@ -53,4 +55,7 @@ func InitRoutes(e *echo.Echo) {
 	rentalGroup.GET("", rentalController.GetAllRentals, middlewares.JWTMiddleware(tokenRepo))
 	rentalGroup.PUT("/:id", rentalController.UpdateRental, middlewares.JWTMiddleware(tokenRepo))
 	rentalGroup.DELETE("/:id", rentalController.DeleteRental, middlewares.JWTMiddleware(tokenRepo))
+
+	paymentGroup := e.Group("/payments")
+	paymentGroup.POST("", paymentController.CreatePayment, middlewares.JWTMiddleware(tokenRepo))
 }

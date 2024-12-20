@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"errors"
 	"invitified-go/models"
 	"os"
 	"time"
@@ -17,6 +16,7 @@ type RentalRepository interface {
 	Update(rental *models.Rental) error
 	Delete(id uuid.UUID) error
 	CheckOverlap(equipmentID uuid.UUID, startDate, endDate time.Time) (bool, error)
+	UpdateStatus(id uuid.UUID, status string) error
 }
 
 type rentalRepository struct {
@@ -28,31 +28,55 @@ func NewRentalRepository(db *gorm.DB) RentalRepository {
 }
 
 func (r *rentalRepository) Create(rental *models.Rental) error {
-	// Check for overlapping rentals for each item
-	for _, item := range rental.Items {
-		overlap, err := r.CheckOverlap(item.EquipmentID, rental.StartDate, rental.EndDate)
-		if err != nil {
-			return err
-		}
-		if overlap {
-			return errors.New("equipment is already rented for the specified time period")
-		}
-	}
+	return r.db.Transaction(func(tx *gorm.DB) error {
+		// Generate IDs
+		rental.ID = uuid.New()
+		rental.Status = "PENDING"
 
-	// Create rental and rental items
-	if err := r.db.Create(rental).Error; err != nil {
-		return err
-	}
-	for i := range rental.Items {
-		rental.Items[i].RentalID = rental.ID
-		rental.Items[i].ID = uuid.New() // Ensure unique rental_item_id
-		if err := r.db.Create(&rental.Items[i]).Error; err != nil {
+		// Store equipment names before creating items
+		equipmentNames := make(map[uuid.UUID]string)
+		for _, item := range rental.Items {
+			var equipment models.Equipment
+			if err := tx.First(&equipment, "equipment_id = ?", item.EquipmentID).Error; err != nil {
+				return err
+			}
+			equipmentNames[item.EquipmentID] = equipment.Name
+		}
+
+		// Create rental
+		if err := tx.Create(&models.Rental{
+			ID:        rental.ID,
+			UserID:    rental.UserID,
+			StartDate: rental.StartDate,
+			EndDate:   rental.EndDate,
+			TotalCost: rental.TotalCost,
+			Status:    rental.Status,
+		}).Error; err != nil {
 			return err
 		}
-	}
-	return nil
+
+		// Create rental items
+		items := make([]models.RentalItem, len(rental.Items))
+		for i, item := range rental.Items {
+			items[i] = models.RentalItem{
+				ID:            uuid.New(),
+				RentalID:      rental.ID,
+				EquipmentID:   item.EquipmentID,
+				Quantity:      item.Quantity,
+				EquipmentName: equipmentNames[item.EquipmentID],
+			}
+		}
+
+		// Batch create items
+		if err := tx.Create(&items).Error; err != nil {
+			return err
+		}
+
+		// Update rental object with created items
+		rental.Items = items
+		return nil
+	})
 }
-
 func (r *rentalRepository) FindByID(id uuid.UUID) (*models.Rental, error) {
 	var rental models.Rental
 	err := r.db.Preload("Items").First(&rental, "rental_id = ?", id).Error
@@ -71,6 +95,10 @@ func (r *rentalRepository) Update(rental *models.Rental) error {
 
 func (r *rentalRepository) Delete(id uuid.UUID) error {
 	return r.db.Delete(&models.Rental{}, "rental_id = ?", id).Error
+}
+
+func (r *rentalRepository) UpdateStatus(id uuid.UUID, status string) error {
+	return r.db.Model(&models.Rental{}).Where("rental_id = ?", id).Update("status", status).Error
 }
 
 func (r *rentalRepository) CheckOverlap(equipmentID uuid.UUID, startDate, endDate time.Time) (bool, error) {

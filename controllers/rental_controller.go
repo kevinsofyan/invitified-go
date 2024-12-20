@@ -7,7 +7,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/gommon/log"
 )
 
 type RentalController struct {
@@ -37,23 +36,30 @@ func (ctrl *RentalController) CreateRental(c echo.Context) error {
 
 	rental.UserID = userID
 
-	// Calculate total cost
+	// Calculate total cost and set equipment names in one loop
 	var totalCost float64
-	log.Print(rental.Items)
+	equipmentMap := make(map[uuid.UUID]*models.Equipment)
+
 	for i := range rental.Items {
 		equipment, err := ctrl.equipmentRepo.FindEquipmentByID(rental.Items[i].EquipmentID)
 		if err != nil {
 			return c.JSON(http.StatusNotFound, map[string]string{"message": "Equipment not found"})
 		}
+		equipmentMap[equipment.ID] = equipment
+
 		duration := rental.EndDate.Sub(rental.StartDate).Hours() / 24
 		itemCost := float64(rental.Items[i].Quantity) * equipment.RentalPrice * duration
 		totalCost += itemCost
+
+		rental.Items[i].EquipmentName = equipment.Name
 	}
 	rental.TotalCost = totalCost
 
+	// Create rental and rental items
 	if err := ctrl.repo.Create(rental); err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
+
 	return c.JSON(http.StatusCreated, rental)
 }
 
